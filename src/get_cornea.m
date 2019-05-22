@@ -1,4 +1,5 @@
-I = imread("../data/OD1con_Cistinosis/CISTINOSIS_20160718_120806_PENTACAM_R_25.BMP");
+function [ cornea, diff ] = get_cornea( I )
+
 I = imcrop( I,[100, 130, 700, 410] );
 I = rgb2gray(I);
 
@@ -44,5 +45,4 @@ diff = column - bb(1);
 % Crop the cornea
 cornea = I( bb(2)+1:bb(2)+bb(4), bb(1)+1:bb(1)+bb(3) );
 
-figure,
-imshowpair( I ,cornea, "montage" );
+end

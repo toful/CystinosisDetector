@@ -25,6 +25,10 @@ fprintf("Data Loaded\n");
 
 fprintf("Processing all images of patient: %s\n", patients{1} );
 elems = size( All_I{1} );
-for i = 1:elems(2)
-    [ crystals_sections, grey_sections] = analyze_image( All_I{1}{i} );
-end
+%for i = 1:elems(2)
+%    [ crystals_sections, grey_sections] = analyze_image( All_I{1}{i}, 1 );
+%end
+
+[ crystals_sections, grey_sections] = analyze_image( All_I{1}{10}, 1 );
+
+
