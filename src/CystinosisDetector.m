@@ -23,12 +23,13 @@ end
 cd( '../src' )
 fprintf("Data Loaded\n");
 
-fprintf("Processing all images of patient: %s\n", patients{1} );
-elems = size( All_I{1} );
-%for i = 1:elems(2)
-%    [ crystals_sections, grey_sections] = analyze_image( All_I{1}{i}, 1 );
-%end
+patient=6;
+fprintf("Processing all images of patient: %s\n", patients{ patient } );
+elems = size( All_I{ patient } );
+for i = 1:elems(2)
+    [ crystals_sections, grey_sections] = analyze_image( All_I{patient}{i}, 0 );
+end
 
-[ crystals_sections, grey_sections] = analyze_image( All_I{1}{10}, 1 );
+%[ crystals_sections, grey_sections] = analyze_image( All_I{1}{10}, 1 );
 
 

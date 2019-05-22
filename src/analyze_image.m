@@ -3,6 +3,7 @@ function [ crystals_sections, grey_sections] = analyze_image( I, prin )
 [ cornea, diff ] = get_cornea( I );
 
 cornea = flatten_corena( cornea );
+figure, imshow( cornea );
 
 sections = get_segments_static( cornea );
 
