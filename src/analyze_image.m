@@ -4,7 +4,7 @@ function [ crystals_sections, grey_sections] = analyze_image( I, prin )
 
 cornea = flatten_corena( cornea );
 
-sections = get_segments_static( cornea );
+sections = get_segments( cornea, diff )
 
 crystals_sections = cell( 6, 1);
 grey_sections = cell( 6, 1);
