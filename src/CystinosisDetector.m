@@ -23,12 +23,28 @@ end
 cd( '../src' )
 fprintf("Data Loaded\n");
 
-fprintf("Processing all images of patient: %s\n", patients{1} );
-elems = size( All_I{1} );
-%for i = 1:elems(2)
-%    [ crystals_sections, grey_sections] = analyze_image( All_I{1}{i}, 1 );
-%end
+patient=1;
+elems = size( All_I{ patient } );
+% creating structures to store the results
+crystals = cell( 1, numel( 6 ) );
+greys = cell( 1, numel( 6 ) );
+for i = 1:6
+    crystals{i} = cell( 1, numel( elems(2) ) );
+    greys{i} = cell( 1, numel( elems(2) ) );
+end
 
-[ crystals_sections, grey_sections] = analyze_image( All_I{1}{10}, 1 );
+fprintf("Processing all images of patient: %s\n", patients{ patient } );
+for i = 1:elems(2)
+    [ crystals_sections, grey_sections] = analyze_image( All_I{patient}{i}, 0 );
+    for j = 1:6
+       crystals{j}{i} = crystals_sections{j};
+       greys{j}{i} = grey_sections{j}; 
+    end
+end
 
+%[ crystals_sections, grey_sections] = analyze_image( All_I{1}{10}, 1 );
 
+% printing the results
+fprintf("Plotting the results of patient: %s\n", patients{ patient } );
+print_results( crystals, sprintf('Crystals of patient %s', patients{ patient } ), 'Crystal Pixels' );
+print_results( greys, sprintf('Grey level on Crystals of patient %s', patients{ patient } ), 'Grey level on Crystal Pixels' );
