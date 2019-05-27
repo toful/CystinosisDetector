@@ -3,6 +3,7 @@ function print_results( data, title_str, label )
 figure,
 for j = 1:6
     plot( [ data{j}{:} ] );
+    %semilogy( [ data{j}{:} ] );
     hold on; 
 end
 title( title_str );

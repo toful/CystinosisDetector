@@ -33,10 +33,6 @@ for i=1:6
     end
 end
 
-    
-%figure, imshow( cornea );
-
-%sections = get_segments( cornea, diff );
 
 crystals_sections = cell( 6, 3);
 grey_sections = cell( 6, 3);

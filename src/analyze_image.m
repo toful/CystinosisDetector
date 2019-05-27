@@ -2,10 +2,10 @@ function [ crystals_sections, grey_sections] = analyze_image( I, prin )
 
 [ cornea, diff ] = get_cornea( I );
 
-cornea = flatten_corena( cornea );
+cornea = flatten_cornea( cornea );
 %figure, imshow( cornea );
 
-sections = get_segments( cornea, diff )
+sections = get_segments( cornea, diff );
 
 crystals_sections = cell( 6, 1);
 grey_sections = cell( 6, 1);

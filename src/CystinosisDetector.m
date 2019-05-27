@@ -33,6 +33,8 @@ for i = 1:6
     greys{i} = cell( 1, numel( elems(2) ) );
 end
 
+%[ crystals_sections, grey_sections] = analyze_image( All_I{2}{4}, 0 );
+
 fprintf("Processing all images of patient: %s\n", patients{ patient } );
 for i = 1:elems(2)
     [ crystals_sections, grey_sections] = analyze_image( All_I{patient}{i}, 0 );
@@ -41,8 +43,6 @@ for i = 1:elems(2)
        greys{j}{i} = grey_sections{j}; 
     end
 end
-
-%[ crystals_sections, grey_sections] = analyze_image( All_I{1}{10}, 1 );
 
 % printing the results
 fprintf("Plotting the results of patient: %s\n", patients{ patient } );

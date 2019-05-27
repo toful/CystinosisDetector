@@ -59,36 +59,78 @@ end
 cd('../src')
 fprintf("Data Loaded\n");
 
-% Start the comparison
+elems = min( size( All_I{1},2 ) , size( All_I{2},2 ) );
 
-for i=1:size(All_I{1},2)
-    %figure,
-    %imshowpair(All_I{1}{i}, All_I{2}{i}, 'montag');
-    
-    [crystals, gray] = compare(All_I{1}{i}, All_I{2}{i}, 0);
+% creating structures to store the results
+crystals = cell( 1, 6 );
+greys = cell( 1, 6 );
+for i = 1:6
+    crystals{i} = cell( 1,  elems );
+    greys{i} = cell( 1, elems );
+end
+
+% Start the comparison
+for i=1:elems
+    [crystals_sections, grey_sections] = compare(All_I{1}{i}, All_I{2}{i}, 0);
+    for j = 1:6
+       crystals{j}{i} = crystals_sections{j}{3};
+       greys{j}{i} = grey_sections{j}{3}; 
+    end
     fprintf("\n------------------------\n");
     fprintf("Gray %i: \n",i);
     for s=1:6
-        fprintf("%i. %.2f ", s,gray{s}{3});
-        %plot([gray{s}{3}]);
-        %hold on;
+        fprintf("%i. %.2f ", s, grey_sections{s}{3});
     end
-    
-    %ylabel("Percentage");
-    %xlabel("Sections");
-    
-    %hold off;
     fprintf("\n");
     fprintf("Crystals %i: \n", i);
-    aux=cell(1,6);
     for s=1:6
-        fprintf("%i. %.2f ", s, crystals{s}{3});
-        aux{s} = crystals{s}{3};
+        fprintf("%i. %.2f ", s, crystals_sections{s}{3});
     end
-    x = linspace(0,1,6);
-    plot(x,cell2mat(aux));
-    hold on;
-    ylabel("Percentage");
-    xlabel("Sections");
-    hold off;
 end
+
+% Printing the plots
+print_results( crystals, sprintf('Crystal Pixels Ratio Increment'), 'Ratio Increment' );
+print_results( greys, sprintf('Grey level on Crystal Pixels Ratio Increment'), 'Ratio Increment' );
+
+MIN = cell(1,6);
+MAX = cell(1,6);
+crystals_norm = crystals;
+for j=1:6
+    MIN{j} = min( [crystals{j}{:}] );
+    MAX{j} = max( [crystals{j}{:}] );
+    for i=1:elems
+        crystals_norm{j}{i} = ( crystals{j}{i} - MIN{j} ) / ( MAX{j} -MIN{j} ); 
+    end
+end
+MIN = [ MIN{:} ];
+MAX = [ MAX{:} ];
+crystals_norm2 = crystals;
+for j=1:6
+    for i=1:elems
+        crystals_norm2{j}{i} = ( crystals{j}{i} - MIN ) / ( MAX -MIN ); 
+    end
+end
+print_results( crystals_norm, sprintf('Crystal Pixels Ratio Increment'), 'Ratio Increment Normalized for each Segment' );
+print_results( crystals_norm2, sprintf('Crystal Pixels Ratio Increment'), 'Ratio Increment Normalized' );
+
+%%%%%%%%%%%%%%%%%%%%%%2nd plots
+MIN = cell(1,6);
+MAX = cell(1,6);
+greys_norm = greys;
+for j=1:6
+    MIN{j} = min( [greys{j}{:}] );
+    MAX{j} = max( [greys{j}{:}] );
+    for i=1:elems
+        greys_norm{j}{i} = ( greys{j}{i} - MIN{j} ) / ( MAX{j} -MIN{j} ); 
+    end
+end
+MIN = [ MIN{:} ];
+MAX = [ MAX{:} ];
+greys_norm2 = greys;
+for j=1:6
+    for i=1:elems
+        greys_norm2{j}{i} = ( greys{j}{i} - MIN ) / ( MAX -MIN ); 
+    end
+end
+print_results( greys_norm, sprintf('Grey level on Pixels Ratio Increment'), 'Ratio Increment Normalized for each Segment' );
+print_results( greys_norm2, sprintf('Grey level on Pixels Ratio Increment'), 'Ratio Increment Normalized' );
