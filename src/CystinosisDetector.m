@@ -1,5 +1,5 @@
 %Cystinosis Avaluator
-
+function [] = CystinosisDetector()
 %Loading all the data
 cd( '../data' )
 patients = dir;
@@ -17,7 +17,7 @@ for i = 1:numel( patients )
     for k = 1:numel(S)
         F = fullfile( D, S(k).name );
         All_I{i}{k} = imread( F );
-        %imshow( I{i}{k} );
+        
     end
 end
 cd( '../src' )
@@ -37,6 +37,7 @@ end
 
 fprintf("Processing all images of patient: %s\n", patients{ patient } );
 for i = 1:elems(2)
+    % Analyze all the images of a patient
     [ crystals_sections, grey_sections] = analyze_image( All_I{patient}{i}, 0 );
     for j = 1:6
        crystals{j}{i} = crystals_sections{j};
@@ -48,3 +49,4 @@ end
 fprintf("Plotting the results of patient: %s\n", patients{ patient } );
 print_results( crystals, sprintf('Crystals of patient %s', patients{ patient } ), 'Crystal Pixels' );
 print_results( greys, sprintf('Grey level on Crystals of patient %s', patients{ patient } ), 'Grey level on Crystal Pixels' );
+end

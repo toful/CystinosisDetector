@@ -1,3 +1,5 @@
+%Fucntion used to flatten the cornea
+
 function cornea = flatten_cornea( cornea )
 
 %flatting the cornea
@@ -8,11 +10,13 @@ for j = 1:cols
     i = 1;
     new_i = 1;
     if cornea_bin(i,j) < 1
+        % Continue seraching for a white pixel
         while cornea_bin(i,j) < 1 && i < rows
             i=i+1;
         end
         cornea_limit = i + 20;
         i=i-1;
+        % Move with pixels to the upper side of the image
         while i < cornea_limit && i < rows
             aux = cornea(i,j);
             cornea(i,j) = 0;
@@ -30,6 +34,7 @@ for j = 1:cols
 end
 
 threshold = 0.05;
+% Remove the exces black space and only maintaine the flat cornea
 I_pin_b = imbinarize( cornea, threshold );
 s = regionprops( I_pin_b, 'BoundingBox');
 maxm = s(1);

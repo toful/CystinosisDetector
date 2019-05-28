@@ -1,3 +1,5 @@
+% Slice the cornea to different segments usign diff as the center of the
+% main section, which is the middle one.
 function sections = get_segments( cornea, diff )
 
 nrows = size(cornea, 1);

@@ -1,6 +1,9 @@
+%Function used to extract the cornea from the original image
+
 function [ cornea, diff ] = get_cornea( I )
 
 I = imcrop( I,[100, 130, 700, 410] );
+% Transform to gray scale
 I = rgb2gray(I);
 
 % Get the center of the eye
@@ -17,9 +20,6 @@ se = strel('disk',5);
 S = imerode(J, se);
 % binarize the image
 bin = imbinarize(S, "adaptive", "sensitivity", 0.000001);
-
-
-%less = bwareaopen(bin,700);
 
 % Mask the image with the original one 
 tmp = bsxfun(@times, I, uint8(bin));

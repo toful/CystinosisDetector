@@ -1,6 +1,6 @@
 % Read two folders with the same number of sections and compare
 % the different sections to find if there is more or less crystals
-
+function [] = ComparePatients ()
 %Loading all the data
 cd( '../data' )
 patients = dir;
@@ -19,7 +19,7 @@ while id < 3
     for i=1:numel(patients)
         fprintf("%i. %s\n",i, patients{i});
     end
-    in = input("");
+    in = input(">");
     isInteger = ~isempty(in) ...
             && isnumeric(in) ...
             && isreal(in) ...
@@ -71,7 +71,9 @@ end
 
 % Start the comparison
 for i=1:elems
+    % Compare a pair of images
     [crystals_sections, grey_sections] = compare(All_I{1}{i}, All_I{2}{i}, 0);
+    % Store comparison results
     for j = 1:6
        crystals{j}{i} = crystals_sections{j}{3};
        greys{j}{i} = grey_sections{j}{3}; 
@@ -92,6 +94,7 @@ end
 print_results( crystals, sprintf('Crystal Pixels Ratio Increment'), 'Ratio Increment' );
 print_results( greys, sprintf('Grey level on Crystal Pixels Ratio Increment'), 'Ratio Increment' );
 
+% Normalize the data
 MIN = cell(1,6);
 MAX = cell(1,6);
 crystals_norm = crystals;
@@ -110,6 +113,7 @@ for j=1:6
         crystals_norm2{j}{i} = ( crystals{j}{i} - MIN ) / ( MAX -MIN ); 
     end
 end
+
 print_results( crystals_norm, sprintf('Crystal Pixels Ratio Increment'), 'Ratio Increment Normalized for each Segment' );
 print_results( crystals_norm2, sprintf('Crystal Pixels Ratio Increment'), 'Ratio Increment Normalized' );
 
@@ -134,3 +138,4 @@ for j=1:6
 end
 print_results( greys_norm, sprintf('Grey level on Pixels Ratio Increment'), 'Ratio Increment Normalized for each Segment' );
 print_results( greys_norm2, sprintf('Grey level on Pixels Ratio Increment'), 'Ratio Increment Normalized' );
+end

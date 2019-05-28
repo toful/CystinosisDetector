@@ -1,3 +1,5 @@
+%Function used to extract the cornea and compare the two imatges of
+%different patiens or state of healing of the same patient.
 function [ crystals_sections, grey_sections] = compare( pat1, pat2, prin )
 
 cornea = cell(1, 2);
@@ -13,8 +15,6 @@ for i=1: numel(cornea)
     sections{i} = get_segments(cornea{i}, diff{i});
     crystals{i} = imbinarize( cornea{i}, 0.625 ); 
 end
-%figure,
-%imshowpair(crystals{1}, crystals{2}, 'montag');
 
 % Make the comparasion in the same sections of the cornea
 % by making each section have the same size

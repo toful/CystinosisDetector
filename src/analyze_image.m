@@ -1,3 +1,6 @@
+% Functions used to analyse one image by extracting the cornea, analyzing
+% it and ontaineing the number of crystals and gray colors in each sections
+% and in the whole.
 function [ crystals_sections, grey_sections] = analyze_image( I, prin )
 
 [ cornea, diff ] = get_cornea( I );
